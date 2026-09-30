@@ -1,0 +1,224 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090909" />
+    <title>Product | ZSCMMR</title>
+    <link rel="stylesheet" href="shop.css" />
+    <script src="shop.js" defer></script>
+    <style>
+      :root {
+        --ink: #f4f4f1;
+        --muted: #91918d;
+        --line: rgba(255, 255, 255, 0.13);
+        --surface: #111;
+        --accent: #d6ff65;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: #090909; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+      a { color: inherit; }
+      button { font: inherit; }
+      .shell { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+      .navbar { position: fixed; top: 0; left: 0; z-index: 20; display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 18px; padding: 7px 20px; border-bottom: 1px solid transparent; background: transparent; transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, backdrop-filter 0.35s ease; }
+      .navbar.scrolled { border-bottom-color: rgba(255, 255, 255, 0.08); background: rgba(0, 0, 0, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+      .nav-links { display: flex; align-items: center; gap: 18px; }
+      .nav-link { color: rgba(255, 255, 255, 0.95); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase; transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+      .nav-link:hover { color: var(--accent); opacity: 0.9; transform: translateY(-1px); }
+      .menu-toggle { display: none; width: 36px; height: 30px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+      .menu-toggle span { display: block; width: 22px; height: 2px; border-radius: 2px; background: white; }
+      .navbar-logo { display: flex; width: 72px; align-items: center; justify-content: center; }
+      .navbar-logo img { display: block; width: 100%; height: auto; object-fit: contain; }
+      .detail-shell { padding-top: 94px; padding-bottom: 84px; }
+      .breadcrumb { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 27px; color: #858580; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+      .breadcrumb a { text-decoration: none; transition: color 150ms ease; }
+      .breadcrumb a:hover { color: var(--accent); }
+      .breadcrumb span[aria-current="page"] { color: #ddd; }
+      .detail-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.8fr); gap: clamp(35px, 7vw, 92px); align-items: start; }
+      .gallery { min-width: 0; }
+      .main-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 4.7; background: #151515; }
+      .main-image-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity 180ms ease; }
+      .image-index { position: absolute; top: 16px; left: 16px; padding: 7px 10px; background: rgba(0, 0, 0, 0.7); color: #ddd; font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; }
+      .thumbnail-list { display: flex; gap: 10px; margin-top: 10px; }
+      .thumbnail { width: 76px; height: 88px; overflow: hidden; padding: 0; border: 1px solid var(--line); background: #151515; cursor: pointer; }
+      .thumbnail[aria-pressed="true"] { border-color: var(--accent); }
+      .thumbnail img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .product-details { padding-top: 13px; }
+      .product-category { margin: 0 0 14px; color: var(--accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; }
+      h1 { margin: 0; font-size: clamp(2.3rem, 4vw, 4.5rem); font-weight: 500; letter-spacing: 0; line-height: 1.02; }
+      .price { margin: 20px 0 24px; color: #e2e2dc; font-size: 1.05rem; }
+      .description { max-width: 480px; margin: 0; padding: 21px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: #a4a49e; font-size: 0.9rem; line-height: 1.8; }
+      .detail-meta { display: grid; gap: 0; margin: 25px 0 29px; }
+      .meta-row { display: flex; justify-content: space-between; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 0.76rem; }
+      .meta-row span:first-child { color: var(--muted); }
+      .meta-row span:last-child { color: #e0e0da; text-align: right; }
+      .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+      .action-button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 10px; padding: 0 18px; border: 1px solid var(--accent); background: var(--accent); color: #111; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-decoration: none; text-transform: uppercase; transition: background 160ms ease, color 160ms ease; }
+      .action-button:hover { background: transparent; color: var(--accent); }
+      .action-button.secondary { border-color: var(--line); background: transparent; color: var(--ink); }
+      .action-button.secondary:hover { border-color: var(--accent); color: var(--accent); }
+      .contact-note { margin: 14px 0 0; color: #777; font-size: 0.7rem; line-height: 1.6; }
+      .related { padding: 30px 0 80px; border-top: 1px solid var(--line); }
+      .related-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+      .related-heading p { margin: 0; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+      .related-heading a { color: var(--accent); font-size: 0.72rem; text-decoration: none; }
+      .related-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+      .related-card { display: block; min-width: 0; text-decoration: none; }
+      .related-card img { display: block; width: 100%; aspect-ratio: 4 / 4.3; object-fit: cover; background: #151515; transition: opacity 160ms ease; }
+      .related-card:hover img { opacity: 0.78; }
+      .related-card span { display: block; margin-top: 10px; color: #ddd; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+      .site-footer { padding: 23px 0; border-top: 1px solid var(--line); color: #777; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+      .footer-row { display: flex; justify-content: space-between; gap: 20px; }
+      .footer-row a { text-decoration: none; }
+      @media (max-width: 760px) {
+        .shell { width: min(100% - 40px, 600px); }
+        .detail-shell { padding-top: 82px; }
+        .detail-grid { grid-template-columns: 1fr; gap: 31px; }
+        .product-details { padding-top: 0; }
+        .related-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+      }
+      @media (max-width: 480px) {
+        .shell { width: calc(100% - 32px); }
+        .navbar { min-height: 50px; padding: 6px 12px; gap: 8px; }
+        .menu-toggle { position: absolute; top: 50%; left: 12px; z-index: 2; display: flex; transform: translateY(-50%); }
+        .nav-links { position: absolute; top: 100%; left: 0; display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 12px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px); }
+        .navbar.menu-open .nav-links { display: flex; }
+        .navbar.menu-open .nav-link { padding: 12px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .navbar.menu-open .nav-link:last-child { border-bottom: 0; }
+        .navbar-logo { position: absolute; top: 50%; left: 50%; width: 46px; transform: translate(-50%, -50%); }
+        .detail-shell { padding-top: 72px; padding-bottom: 56px; }
+        .breadcrumb { margin-bottom: 18px; font-size: 0.62rem; }
+        .product-details { padding: 0 2px; }
+        .thumbnail { width: 64px; height: 74px; }
+        .actions { flex-direction: column; }
+        .action-button { width: 100%; }
+        .related { padding-bottom: 55px; }
+        .related-heading { align-items: start; flex-direction: column; gap: 8px; }
+        .related-card span { font-size: 0.62rem; }
+        .footer-row { flex-direction: column; gap: 9px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" aria-label="Main navigation">
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html#top">Home</a>
+        <a class="nav-link" href="catalog.html">Shop</a>
+        <a class="nav-link" href="gallery.html">Gallery</a>
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </div>
+      <div class="navbar-logo" aria-label="Brand logo"><img src="logo1.png" alt="Brand logo" /></div>
+    </nav>
+
+    <main>
+      <section class="detail-shell shell" aria-labelledby="product-name">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span aria-hidden="true">/</span><a href="catalog.html">Catalog</a><span aria-hidden="true">/</span><span id="breadcrumb-name" aria-current="page">Product</span>
+        </nav>
+        <div class="detail-grid">
+          <div class="gallery">
+            <div class="main-image-wrap">
+              <img id="main-image" src="produk.jpg" alt="Product photo" />
+              <span class="image-index">ZSCMMR / 01</span>
+            </div>
+            <div class="thumbnail-list" aria-label="Product images">
+              <button class="thumbnail" type="button" data-image="produk.jpg" aria-label="View product image 1" aria-pressed="true"><img src="produk.jpg" alt="" /></button>
+              <button class="thumbnail" type="button" data-image="produk2.png" aria-label="View product image 2" aria-pressed="false"><img src="produk2.png" alt="" /></button>
+            </div>
+          </div>
+          <div class="product-details">
+            <p class="product-category" id="product-category">Collection</p>
+            <h1 id="product-name">Product</h1>
+            <p class="price" id="product-price">Rp0</p>
+            <p class="description" id="product-description"></p>
+            <div class="detail-meta">
+              <div class="meta-row"><span>Collection</span><span id="product-collection">ZSCMMR / 2026</span></div>
+              <div class="meta-row"><span>Category</span><span id="product-meta-category">Product</span></div>
+              <div class="meta-row"><span>Availability</span><span>Contact for availability</span></div>
+            </div>
+            <div class="actions">
+              <a class="action-button" id="inquiry-link" href="mailto:zenkscammer@gmail.com">Ask about this piece <span aria-hidden="true">â†’</span></a>
+              <a class="action-button secondary" href="catalog.html">Back to catalog</a>
+            </div>
+            <p class="contact-note">For sizing, availability, or product questions, get in touch with the ZSCMMR team.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="related shell" aria-label="More from the collection">
+        <div class="related-heading"><p>Explore the collection</p><a href="catalog.html">View all pieces â†’</a></div>
+        <div class="related-grid" id="related-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="footer-row shell"><span>&copy; 2026 ZSCMMR. All rights reserved.</span><a href="index.html#contact">Contact</a><a href="policies.html">Privacy &amp; Policies</a></div></footer>
+
+    <script>
+      const products = {
+        "essential-series": { name: "Essential Series", category: "Essentials", price: 1920000, description: "A considered everyday piece from the ZSCMMR collection. Explore the details and contact us for current availability.", collection: "CORE / 2026" },
+        "nocturne-bag": { name: "Nocturne Bag", category: "Bags & carry", price: 2880000, description: "A carry piece from the ZSCMMR collection, designed around everyday use. Contact us for details and current availability.", collection: "CARRY / 2026" },
+        "street-utility": { name: "Street Utility", category: "Streetwear", price: 2320000, description: "A utility-inspired piece from the ZSCMMR streetwear collection. Contact us for details and current availability.", collection: "UTILITY / 2026" },
+        "after-dark": { name: "After Dark", category: "Limited release", price: 3360000, description: "A limited piece from the ZSCMMR collection. Contact us to ask about details and current availability.", collection: "LIMITED / 2026" },
+        "shadow-edition": { name: "Shadow Edition", category: "Limited release", price: 2640000, description: "A limited edition piece from the ZSCMMR collection. Contact us to ask about details and current availability.", collection: "LIMITED / 2026" },
+        "archive-drop": { name: "Archive Drop", category: "Limited release", price: 3120000, description: "A piece from the ZSCMMR archive collection. Contact us to ask about details and current availability.", collection: "ARCHIVE / 2026" },
+      };
+      const productEntries = Object.entries(products);
+      const rupiah = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 });
+      const requestedProduct = new URLSearchParams(window.location.search).get("product");
+      const productId = products[requestedProduct] ? requestedProduct : productEntries[0][0];
+      const product = products[productId];
+
+      document.title = `${product.name} | ZSCMMR`;
+      document.querySelector("#breadcrumb-name").textContent = product.name;
+      document.querySelector("#product-name").textContent = product.name;
+      document.querySelector("#product-category").textContent = product.category;
+      document.querySelector("#product-price").textContent = rupiah.format(product.price);
+      document.querySelector("#product-description").textContent = product.description;
+      document.querySelector("#product-collection").textContent = product.collection;
+      document.querySelector("#product-meta-category").textContent = product.category;
+      document.querySelector("#main-image").alt = `${product.name} product photo`;
+      document.querySelector("#inquiry-link").href = `mailto:zenkscammer@gmail.com?subject=${encodeURIComponent(`Product inquiry: ${product.name}`)}`;
+
+      const thumbnailButtons = [...document.querySelectorAll(".thumbnail")];
+      thumbnailButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelector("#main-image").src = button.dataset.image;
+          thumbnailButtons.forEach((thumbnail) => thumbnail.setAttribute("aria-pressed", String(thumbnail === button)));
+        });
+      });
+
+      const relatedGrid = document.querySelector("#related-grid");
+      productEntries.filter(([id]) => id !== productId).slice(0, 3).forEach(([id, relatedProduct]) => {
+        const link = document.createElement("a");
+        link.className = "related-card";
+        link.href = `product.html?product=${id}`;
+        const image = document.createElement("img");
+        image.src = "produk.jpg";
+        image.alt = `${relatedProduct.name} product`;
+        const name = document.createElement("span");
+        name.textContent = relatedProduct.name;
+        link.append(image, name);
+        relatedGrid.append(link);
+      });
+
+      const navbar = document.querySelector(".navbar");
+      const menuToggle = document.querySelector(".menu-toggle");
+      menuToggle.addEventListener("click", () => {
+        const menuIsOpen = navbar.classList.toggle("menu-open");
+        menuToggle.setAttribute("aria-expanded", String(menuIsOpen));
+        menuToggle.setAttribute("aria-label", menuIsOpen ? "Close menu" : "Open menu");
+      });
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          navbar.classList.remove("menu-open");
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Open menu");
+        });
+      });
+      window.addEventListener("scroll", () => navbar.classList.toggle("scrolled", window.scrollY > 20));
+    </script>
+  </body>
+</html>

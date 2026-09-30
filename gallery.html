@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore the ZSCMMR product and campaign gallery." />
+    <meta name="theme-color" content="#090909" />
+    <title>Gallery | ZSCMMR</title>
+    <link rel="stylesheet" href="shop.css" />
+    <script src="shop.js" defer></script>
+    <style>
+      :root {
+        --ink: #f4f4f1;
+        --muted: #91918d;
+        --line: rgba(255, 255, 255, 0.13);
+        --accent: #d6ff65;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: #090909; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+      a { color: inherit; }
+      button { font: inherit; }
+      .shell { width: min(1600px, calc(100% - 32px)); margin-inline: auto; }
+      .navbar { position: fixed; top: 0; left: 0; z-index: 20; display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 18px; padding: 7px 20px; border-bottom: 1px solid transparent; background: transparent; transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, backdrop-filter 0.35s ease; }
+      .navbar.scrolled { border-bottom-color: rgba(255, 255, 255, 0.08); background: rgba(0, 0, 0, 0.82); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+      .nav-links { display: flex; align-items: center; gap: 18px; }
+      .nav-link { color: rgba(255, 255, 255, 0.95); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase; transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+      .nav-link:hover, .nav-link[aria-current="page"] { color: var(--accent); opacity: 0.9; transform: translateY(-1px); }
+      .menu-toggle { display: none; width: 36px; height: 30px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+      .menu-toggle span { display: block; width: 22px; height: 2px; border-radius: 2px; background: white; }
+      .navbar-logo { display: flex; width: 72px; align-items: center; justify-content: center; }
+      .navbar-logo img { display: block; width: 100%; height: auto; object-fit: contain; }
+
+      .gallery-main { padding: 60px 0 84px; }
+      .gallery-toolbar { display: flex; min-height: 74px; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid var(--line); }
+      .gallery-filters { display: flex; flex-wrap: wrap; gap: 7px; }
+      .gallery-filter { min-height: 35px; padding: 0 13px; border: 1px solid transparent; border-radius: 2px; background: transparent; color: #a7a7a2; cursor: pointer; font-size: 0.73rem; transition: color 160ms ease, border-color 160ms ease, background 160ms ease; }
+      .gallery-filter:hover { color: var(--ink); }
+      .gallery-filter[aria-pressed="true"] { border-color: rgba(214, 255, 101, 0.45); background: rgba(214, 255, 101, 0.08); color: var(--accent); }
+      .gallery-count { color: var(--muted); font-size: 0.72rem; }
+      .gallery-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; padding-top: 20px; }
+      .gallery-tile { position: relative; display: block; width: 100%; aspect-ratio: 4 / 4.7; overflow: hidden; padding: 0; border: 0; background: #151515; color: #fff; cursor: zoom-in; text-align: left; }
+      .gallery-tile img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.82); transition: transform 420ms ease, filter 420ms ease; }
+      .gallery-tile:hover img, .gallery-tile:focus-visible img { filter: saturate(1); transform: scale(1.04); }
+      .gallery-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      .gallery-tile::after { position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(0, 0, 0, 0.72)); content: ""; pointer-events: none; }
+      .tile-caption { position: absolute; right: 15px; bottom: 14px; left: 15px; z-index: 1; display: flex; align-items: end; justify-content: space-between; gap: 10px; }
+      .tile-caption strong { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+      .tile-caption span { color: rgba(255, 255, 255, 0.72); font-size: 0.61rem; letter-spacing: 0.08em; text-transform: uppercase; }
+      .gallery-empty { display: none; padding: 70px 15px; color: var(--muted); text-align: center; }
+      .lightbox { position: fixed; inset: 0; width: min(1100px, calc(100% - 32px)); max-width: 100vw; max-height: calc(100dvh - 32px); margin: auto; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.18); background: #101010; color: var(--ink); }
+      .lightbox::backdrop { background: rgba(0, 0, 0, 0.86); backdrop-filter: blur(4px); }
+      .lightbox-close { position: absolute; top: 24px; right: 24px; z-index: 1; display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid rgba(255, 255, 255, 0.55); background: rgba(0, 0, 0, 0.7); color: #fff; cursor: pointer; font-size: 1.3rem; }
+      .lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+      .lightbox img { display: block; width: 100%; max-height: calc(100dvh - 100px); object-fit: contain; background: #090909; }
+      .lightbox-caption { margin: 12px 2px 0; color: #c8c8c2; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
+      .site-footer { padding: 24px 0; border-top: 1px solid var(--line); color: #777; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+      .footer-row { display: flex; justify-content: space-between; gap: 20px; }
+      .footer-row a { text-decoration: none; }
+
+      @media (max-width: 800px) {
+        .shell { width: calc(100% - 24px); }
+        .gallery-toolbar { align-items: flex-start; flex-direction: column; justify-content: center; gap: 10px; padding: 16px 0; }
+        .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      }
+      @media (max-width: 480px) {
+        .shell { width: calc(100% - 20px); }
+        .navbar { min-height: 50px; padding: 6px 12px; gap: 8px; }
+        .menu-toggle { position: absolute; top: 50%; left: 12px; z-index: 2; display: flex; transform: translateY(-50%); }
+        .nav-links { position: absolute; top: 100%; left: 0; display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 12px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(8px); }
+        .navbar.menu-open .nav-links { display: flex; }
+        .navbar.menu-open .nav-link { padding: 12px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .navbar.menu-open .nav-link:last-child { border-bottom: 0; }
+        .navbar-logo { position: absolute; top: 50%; left: 50%; width: 46px; transform: translate(-50%, -50%); }
+        .gallery-main { padding-top: 58px; }
+        .gallery-filter { min-height: 32px; padding: 0 9px; font-size: 0.67rem; }
+        .gallery-grid { gap: 7px; padding-top: 14px; }
+        .tile-caption { right: 9px; bottom: 9px; left: 9px; }
+        .tile-caption strong { font-size: 0.65rem; }
+        .tile-caption span { font-size: 0.54rem; }
+        .footer-row { flex-direction: column; gap: 9px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" aria-label="Main navigation">
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html#top">Home</a>
+        <a class="nav-link" href="catalog.html">Shop</a>
+        <a class="nav-link" href="gallery.html" aria-current="page">Gallery</a>
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </div>
+      <div class="navbar-logo" aria-label="Brand logo"><img src="logo1.png" alt="Brand logo" /></div>
+    </nav>
+
+    <main class="gallery-main shell">
+      <div class="gallery-toolbar">
+        <div class="gallery-filters" role="group" aria-label="Filter gallery">
+          <button class="gallery-filter" type="button" data-filter="all" aria-pressed="true">All images</button>
+          <button class="gallery-filter" type="button" data-filter="products" aria-pressed="false">Products</button>
+          <button class="gallery-filter" type="button" data-filter="campaign" aria-pressed="false">Campaign</button>
+        </div>
+        <span class="gallery-count" id="gallery-count" aria-live="polite">9 images</span>
+      </div>
+
+      <div class="gallery-grid" id="gallery-grid">
+        <button class="gallery-tile" type="button" data-image-index="1" data-category="products" data-caption="ZSCMMR / Sample image 01" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 01</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="2" data-category="products" data-caption="ZSCMMR / Sample image 02" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 02</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="3" data-category="campaign" data-caption="ZSCMMR / Sample image 03" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 03</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="4" data-category="campaign" data-caption="ZSCMMR / Sample image 04" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 04</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="5" data-category="campaign" data-caption="ZSCMMR / Sample image 05" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 05</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="6" data-category="campaign" data-caption="ZSCMMR / Sample image 06" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 06</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="7" data-category="campaign" data-caption="ZSCMMR / Sample image 07" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 07</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="8" data-category="campaign" data-caption="ZSCMMR / Sample image 08" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 08</strong><span>Temporary</span></span></button>
+        <button class="gallery-tile" type="button" data-image-index="9" data-category="campaign" data-caption="ZSCMMR / Sample image 09" data-image="produk.jpg"><img src="produk.jpg" alt="Temporary ZSCMMR gallery sample" /><span class="tile-caption"><strong>Sample 09</strong><span>Temporary</span></span></button>
+      </div>
+      <p class="gallery-empty" id="gallery-empty">No images in this selection.</p>
+
+      <dialog class="lightbox" aria-label="Expanded gallery image">
+        <button class="lightbox-close" type="button" aria-label="Close image">×</button>
+        <img id="lightbox-image" src="" alt="" />
+        <p class="lightbox-caption" id="lightbox-caption"></p>
+      </dialog>
+    </main>
+
+    <footer class="site-footer"><div class="footer-row shell"><span>© 2026 ZSCMMR. All rights reserved.</span><a href="index.html#contact">Contact</a><a href="policies.html">Privacy &amp; Policies</a></div></footer>
+
+    <script>
+      const navbar = document.querySelector(".navbar");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const filters = [...document.querySelectorAll(".gallery-filter")];
+      const tiles = [...document.querySelectorAll(".gallery-tile")];
+      const count = document.querySelector("#gallery-count");
+      const emptyState = document.querySelector("#gallery-empty");
+      const lightbox = document.querySelector(".lightbox");
+      const lightboxImage = document.querySelector("#lightbox-image");
+      const lightboxCaption = document.querySelector("#lightbox-caption");
+      let activeFilter = "all";
+
+      function updateGallery() {
+        const visibleTiles = tiles.filter((tile) => activeFilter === "all" || tile.dataset.category === activeFilter);
+        tiles.forEach((tile) => { tile.hidden = !visibleTiles.includes(tile); });
+        count.textContent = `${visibleTiles.length} ${visibleTiles.length === 1 ? "image" : "images"}`;
+        emptyState.style.display = visibleTiles.length ? "none" : "block";
+      }
+
+      filters.forEach((filter) => {
+        filter.addEventListener("click", () => {
+          activeFilter = filter.dataset.filter;
+          filters.forEach((button) => button.setAttribute("aria-pressed", String(button === filter)));
+          updateGallery();
+        });
+      });
+
+      function openLightbox(tile) {
+        lightboxImage.src = tile.dataset.image;
+        lightboxImage.alt = tile.querySelector("img").alt;
+        lightboxCaption.textContent = tile.dataset.caption;
+        lightbox.showModal();
+      }
+
+      tiles.forEach((tile) => tile.addEventListener("click", () => openLightbox(tile)));
+
+      const requestedImage = new URLSearchParams(window.location.search).get("image");
+      const requestedTile = tiles.find((tile) => tile.dataset.imageIndex === requestedImage);
+      if (requestedTile) openLightbox(requestedTile);
+
+      document.querySelector(".lightbox-close").addEventListener("click", () => lightbox.close());
+      lightbox.addEventListener("click", (event) => { if (event.target === lightbox) lightbox.close(); });
+      menuToggle.addEventListener("click", () => {
+        const menuIsOpen = navbar.classList.toggle("menu-open");
+        menuToggle.setAttribute("aria-expanded", String(menuIsOpen));
+        menuToggle.setAttribute("aria-label", menuIsOpen ? "Close menu" : "Open menu");
+      });
+      navLinks.forEach((link) => link.addEventListener("click", () => {
+        navbar.classList.remove("menu-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open menu");
+      }));
+      window.addEventListener("scroll", () => navbar.classList.toggle("scrolled", window.scrollY > 20));
+      updateGallery();
+    </script>
+  </body>
+</html>

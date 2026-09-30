@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Kebijakan privasi, pemesanan, pengiriman, dan retur ZSCMMR." />
+    <meta name="theme-color" content="#090909" />
+    <title>Kebijakan &amp; Privasi | ZSCMMR</title>
+    <link rel="stylesheet" href="shop.css" />
+    <script src="shop.js" defer></script>
+    <style>
+      :root {
+        --ink: #f4f4f1;
+        --muted: #999a93;
+        --line: rgba(255, 255, 255, 0.14);
+        --accent: #d6ff65;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: #090909; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+      a { color: inherit; }
+      button { font: inherit; }
+      .shell { width: min(1120px, calc(100% - 56px)); margin-inline: auto; }
+      .navbar { position: fixed; top: 0; left: 0; z-index: 20; display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 18px; padding: 7px 20px; border-bottom: 1px solid transparent; background: transparent; transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease; }
+      .navbar.scrolled { border-bottom-color: rgba(255, 255, 255, 0.08); background: rgba(0, 0, 0, 0.84); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+      .nav-links { display: flex; align-items: center; gap: 18px; }
+      .nav-link { color: rgba(255, 255, 255, 0.95); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase; }
+      .nav-link:hover { color: var(--accent); }
+      .menu-toggle { display: none; width: 36px; height: 30px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+      .menu-toggle span { display: block; width: 22px; height: 2px; border-radius: 2px; background: #fff; }
+      .navbar-logo { display: flex; width: 72px; align-items: center; justify-content: center; }
+      .navbar-logo img { display: block; width: 100%; height: auto; object-fit: contain; }
+      .policy-main { padding: 105px 0 90px; }
+      .eyebrow { margin: 0 0 14px; color: var(--accent); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+      h1, h2, p { margin-top: 0; }
+      h1 { margin-bottom: 13px; font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 500; letter-spacing: 0; line-height: 0.98; }
+      .updated { margin: 0; color: var(--muted); font-size: 0.75rem; }
+      .policy-notice { margin: 30px 0 40px; padding: 17px 19px; border-left: 2px solid var(--accent); background: #121310; color: #c6c7bf; font-size: 0.8rem; line-height: 1.7; }
+      .policy-layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 58px; align-items: start; }
+      .policy-nav { position: sticky; top: 92px; display: grid; gap: 4px; padding-right: 18px; border-right: 1px solid var(--line); }
+      .policy-nav a { padding: 10px 0; color: #a4a59e; font-size: 0.76rem; text-decoration: none; }
+      .policy-nav a:hover { color: var(--accent); }
+      .policy-section { padding: 0 0 33px; border-bottom: 1px solid var(--line); scroll-margin-top: 100px; }
+      .policy-section + .policy-section { padding-top: 33px; }
+      .policy-section h2 { margin-bottom: 14px; font-size: 1.3rem; font-weight: 600; }
+      .policy-section p, .policy-section li { color: #a9aaa3; font-size: 0.86rem; line-height: 1.8; }
+      .policy-section p { margin-bottom: 13px; }
+      .policy-section ul { display: grid; gap: 9px; margin: 0 0 16px; padding-left: 21px; }
+      .policy-section li::marker { color: var(--accent); }
+      .policy-section strong { color: #e8e8e2; font-weight: 600; }
+      .policy-section a { color: var(--accent); text-underline-offset: 3px; }
+      .site-footer { padding: 24px 0; border-top: 1px solid var(--line); color: #777; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+      .footer-row { display: flex; justify-content: space-between; gap: 20px; }
+      .footer-row a { text-decoration: none; }
+      @media (max-width: 760px) {
+        .shell { width: min(100% - 40px, 650px); }
+        .policy-layout { grid-template-columns: 1fr; gap: 30px; }
+        .policy-nav { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 0 0 12px; border-right: 0; border-bottom: 1px solid var(--line); }
+        .policy-nav a { font-size: 0.7rem; }
+      }
+      @media (max-width: 480px) {
+        .shell { width: calc(100% - 32px); }
+        .navbar { min-height: 50px; padding: 6px 12px; gap: 8px; }
+        .menu-toggle { position: absolute; top: 50%; left: 12px; z-index: 2; display: flex; transform: translateY(-50%); }
+        .nav-links { position: absolute; top: 100%; left: 0; display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 12px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); background: rgba(0, 0, 0, 0.86); backdrop-filter: blur(8px); }
+        .navbar.menu-open .nav-links { display: flex; }
+        .navbar.menu-open .nav-link { padding: 12px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .navbar.menu-open .nav-link:last-child { border-bottom: 0; }
+        .navbar-logo { position: absolute; top: 50%; left: 50%; width: 46px; transform: translate(-50%, -50%); }
+        .policy-main { padding: 80px 0 60px; }
+        .policy-notice { margin: 24px 0 30px; }
+        .policy-nav { grid-template-columns: 1fr; gap: 0; }
+        .policy-nav a { padding: 8px 0; }
+        .footer-row { flex-direction: column; gap: 9px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" aria-label="Navigasi utama">
+      <button class="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html#top">Home</a>
+        <a class="nav-link" href="catalog.html">Shop</a>
+        <a class="nav-link" href="gallery.html">Gallery</a>
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </div>
+      <div class="navbar-logo" aria-label="Logo ZSCMMR"><img src="logo1.png" alt="ZSCMMR" /></div>
+    </nav>
+
+    <main class="policy-main shell">
+      <header>
+        <p class="eyebrow">Informasi pelanggan</p>
+        <h1>Kebijakan &amp; Privasi</h1>
+        <p class="updated">Terakhir diperbarui: 26 September 2026</p>
+      </header>
+
+      <p class="policy-notice">Situs ini saat ini menerima permintaan pesanan melalui WhatsApp, bukan pembayaran otomatis. Harga, ketersediaan, ongkir, dan ketentuan retur harus dikonfirmasi melalui percakapan sebelum pembayaran.</p>
+
+      <div class="policy-layout">
+        <nav class="policy-nav" aria-label="Daftar kebijakan">
+          <a href="#privasi">Privasi</a>
+          <a href="#pemesanan">Pemesanan</a>
+          <a href="#pengiriman-retur">Pengiriman &amp; Retur</a>
+        </nav>
+
+        <div class="policy-content">
+          <section class="policy-section" id="privasi">
+            <h2>1. Kebijakan Privasi</h2>
+            <p><strong>Data keranjang.</strong> Situs menyimpan ID produk dan jumlah barang pada penyimpanan lokal browser agar keranjang tetap tersedia saat Anda berpindah halaman. Data ini tidak berisi nama, nomor telepon, atau alamat. Anda dapat menghapusnya dengan membersihkan data situs pada browser.</p>
+            <p><strong>Data pesanan.</strong> Saat checkout, Anda mengisi nama, nomor telepon/WhatsApp, alamat pengiriman, dan catatan opsional. Backend menyimpan informasi pesanan tersebut pada server untuk memproses pesanan dan membantu dukungan pelanggan. Pada versi prototype, catatan disimpan di berkas lokal server dan tidak memiliki penghapusan otomatis; kebijakan retensi dan penyimpanan produksi harus ditetapkan sebelum peluncuran publik.</p>
+            <p><strong>Pemrosesan pembayaran.</strong> Untuk membuat invoice, ZSCMMR mengirim referensi pesanan, nama produk, jumlah, dan total IDR ke Xendit. Backend tidak mengirim nama, nomor telepon, atau alamat pengiriman ke endpoint pembuatan invoice. Pembayaran dilakukan pada halaman hosted checkout Xendit; data pembayaran yang Anda masukkan di sana diproses oleh Xendit sesuai kebijakan privasi dan ketentuan Xendit.</p>
+            <p>Versi situs ini tidak menyimpan nomor kartu atau kredensial pembayaran dan tidak menggunakan akun pelanggan atau alat analitik pihak ketiga. Jangan kirim kata sandi, PIN, nomor kartu, atau informasi pembayaran rahasia melalui formulir atau chat.</p>
+            <p>Untuk pertanyaan atau permintaan terkait data pesanan, hubungi <a href="mailto:zenkscammer@gmail.com">zenkscammer@gmail.com</a>.</p>
+          </section>
+
+          <section class="policy-section" id="pemesanan">
+            <h2>2. Ketentuan Pemesanan</h2>
+            <ul>
+              <li>Harga ditampilkan dalam Rupiah (IDR). Nilai saat ini merupakan konversi sementara dengan asumsi US$1 ≈ Rp16.000; konfirmasikan harga resmi sebelum situs dipublikasikan. Subtotal keranjang belum termasuk ongkir atau biaya lain yang mungkin berlaku.</li>
+              <li>Saat checkout, backend menghitung ulang harga dari katalog server dan membuat invoice Xendit. Perubahan harga pada browser tidak mengubah jumlah tagihan server.</li>
+              <li>Status pesanan menjadi lunas setelah Xendit mengirim callback pembayaran yang valid. Menutup atau kembali dari halaman checkout saja tidak membuktikan pembayaran berhasil.</li>
+              <li>Invoice hanya mencakup subtotal barang. Ongkir belum dihitung otomatis pada prototype ini; sepakati cara dan biaya pengiriman dengan ZSCMMR sebelum membayar invoice.</li>
+              <li>Beberapa foto katalog dan galeri masih menggunakan gambar sampel sementara. Pastikan foto dan detail barang yang akan dibeli sudah dikonfirmasi sebelum melakukan pembayaran.</li>
+              <li>Pelanggan bertanggung jawab memberikan nama, nomor yang dapat dihubungi, dan alamat pengiriman yang benar.</li>
+            </ul>
+          </section>
+
+          <section class="policy-section" id="pengiriman-retur">
+            <h2>3. Pengiriman &amp; Retur</h2>
+            <p><strong>Pengiriman.</strong> Tujuan, biaya, dan perkiraan waktu pengiriman bergantung pada alamat, ketersediaan produk, serta jasa kirim. Rincian final akan dikonfirmasi melalui WhatsApp sebelum pembayaran. Saat ini situs belum menampilkan tarif atau estimasi pengiriman tetap.</p>
+            <p><strong>Barang salah atau bermasalah.</strong> Jika barang yang diterima tidak sesuai atau mengalami kerusakan, hubungi ZSCMMR sesegera mungkin melalui WhatsApp atau email. Sertakan nomor pesanan dan foto kondisi barang agar dapat ditinjau. Mohon tunggu instruksi sebelum mengirimkan barang kembali.</p>
+            <p><strong>Permintaan retur lainnya.</strong> Kelayakan retur atau penukaran, batas waktu, kondisi barang, biaya pengiriman kembali, dan cara pengembalian dana perlu disepakati secara tertulis dengan ZSCMMR sebelum pembayaran. Ketentuan ini tidak mengurangi hak konsumen yang berlaku menurut peraturan di Indonesia.</p>
+            <p>Untuk menghindari salah paham, mintalah konfirmasi tertulis mengenai ongkir, estimasi kirim, serta syarat retur untuk pesanan Anda sebelum membayar.</p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer"><div class="footer-row shell"><span>© 2026 ZSCMMR. All rights reserved.</span><a href="index.html#contact">Kontak</a></div></footer>
+
+    <script>
+      const navbar = document.querySelector(".navbar");
+      const menuToggle = document.querySelector(".menu-toggle");
+      menuToggle.addEventListener("click", () => {
+        const menuIsOpen = navbar.classList.toggle("menu-open");
+        menuToggle.setAttribute("aria-expanded", String(menuIsOpen));
+        menuToggle.setAttribute("aria-label", menuIsOpen ? "Tutup menu" : "Buka menu");
+      });
+      document.querySelectorAll(".nav-link").forEach((link) => link.addEventListener("click", () => {
+        navbar.classList.remove("menu-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Buka menu");
+      }));
+      window.addEventListener("scroll", () => navbar.classList.toggle("scrolled", window.scrollY > 20));
+    </script>
+  </body>
+</html>
